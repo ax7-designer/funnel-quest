@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "4.0.0",
+  "appName": "Funnel Quest",
+  "storageKey": "funnel-quest-v4",
+  "stateShape": {
+    "appVersion": "string",
+    "current": "phase id",
+    "xp": "number",
+    "streak": "number",
+    "lastCompleteDate": "YYYY-MM-DD",
+    "lastSaved": "localized datetime",
+    "review": {
+      "YYYY-MM-DD": {
+        "phase id": "boolean"
+      }
+    },
+    "income": {
+      "ticket": "number",
+      "leads": "number",
+      "closeRate": "number",
+      "recurring": "number"
+    },
+    "notes": {
+      "phase id": "string"
+    },
+    "advanced": "boolean"
+  },
+  "backupFormat": {
+    "contentVersion": "4.0.0",
+    "state": "stateShape"
+  }
+}

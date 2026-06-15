@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Funnel Quest: ritual diario para operar un sistema de captacion de leads creativo, visual y mobile-first." />
+  <meta name="theme-color" content="#2f9466" />
+  <link rel="manifest" href="./site.webmanifest" />
+  <title>Funnel Quest V4</title>
+  <style>
+    :root {
+      --ink: #20231f;
+      --muted: #677263;
+      --paper: #f8f4e8;
+      --panel: #fffdf7;
+      --line: #ded6c5;
+      --leaf: #2f9466;
+      --leaf-2: #def5e9;
+      --sun: #f2aa22;
+      --sun-2: #fff1c9;
+      --coral: #e9653b;
+      --coral-2: #ffe2d5;
+      --sky: #2d77be;
+      --sky-2: #e1f0ff;
+      --grape: #7654a1;
+      --grape-2: #eee3f7;
+      --dark: #15231c;
+      --shadow: 0 16px 36px rgba(43, 35, 18, .13);
+      --radius: 22px;
+      color-scheme: light;
+      font-family: "Aptos", "Segoe UI", "Trebuchet MS", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { overflow-x: hidden; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(242, 170, 34, .20), transparent 34rem),
+        radial-gradient(circle at 95% 10%, rgba(45, 119, 190, .13), transparent 28rem),
+        var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(32, 35, 31, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(32, 35, 31, .035) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(to bottom, #000, transparent 72%);
+    }
+
+    button, input, textarea { font: inherit; }
+
+    button {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 10px 15px;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+
+    button:hover { transform: translateY(-1px); border-color: var(--leaf); }
+    button:active { transform: translateY(1px) scale(.99); }
+    button:disabled { cursor: default; opacity: .78; transform: none; }
+    button:disabled:hover { transform: none; border-color: var(--dark); }
+    button.primary { color: white; background: var(--leaf); border-color: var(--leaf); box-shadow: 0 10px 18px rgba(47, 148, 102, .22); }
+    button.coral { color: white; background: var(--coral); border-color: var(--coral); }
+    button.dark { color: white; background: var(--dark); border-color: var(--dark); }
+
+    input, textarea {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: white;
+      color: var(--ink);
+      padding: 12px;
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(36px, 6vw, 74px); line-height: .94; margin-bottom: 14px; letter-spacing: 0; }
+    h2 { font-size: 26px; line-height: 1.08; margin-bottom: 7px; }
+    h3 { font-size: 18px; line-height: 1.14; margin-bottom: 6px; }
+    p { color: var(--muted); }
+
+    .app {
+      position: relative;
+      width: min(1340px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 18px 0 40px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 950;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--leaf);
+      box-shadow: 0 10px 18px rgba(47, 148, 102, .22);
+      font-size: 24px;
+    }
+
+    .save-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 430px;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel, .stat, .mission-card, .coach-card {
+      background: rgba(255, 253, 247, .96);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .mantra {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: var(--sun-2);
+      border: 1px solid #f3d08a;
+      color: #8b5208;
+      font-weight: 950;
+      margin-bottom: 14px;
+    }
+
+    .hero-copy { max-width: 760px; font-size: 18px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+    .coach-card {
+      background: var(--dark);
+      color: white;
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .coach-card p { color: #d8e3db; margin-bottom: 0; }
+
+    .dog-stage {
+      min-height: 128px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .dog {
+      width: 118px;
+      height: 66px;
+      position: relative;
+      animation: dog-bob 1.7s ease-in-out infinite;
+    }
+
+    .dog-body {
+      position: absolute;
+      left: 20px;
+      top: 22px;
+      width: 76px;
+      height: 32px;
+      border-radius: 22px;
+      background: #a76235;
+      box-shadow: inset 0 -7px 0 rgba(0,0,0,.12);
+    }
+
+    .dog-head {
+      position: absolute;
+      right: 1px;
+      top: 8px;
+      width: 42px;
+      height: 38px;
+      border-radius: 18px 18px 20px 20px;
+      background: #b96f3d;
+    }
+
+    .dog-ear {
+      position: absolute;
+      right: 30px;
+      top: 12px;
+      width: 20px;
+      height: 34px;
+      border-radius: 12px;
+      background: #6f3b25;
+      transform: rotate(10deg);
+    }
+
+    .dog-eye {
+      position: absolute;
+      right: 12px;
+      top: 20px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #17120f;
+    }
+
+    .dog-nose {
+      position: absolute;
+      right: -4px;
+      top: 28px;
+      width: 9px;
+      height: 8px;
+      border-radius: 50%;
+      background: #17120f;
+    }
+
+    .dog-tail {
+      position: absolute;
+      left: 9px;
+      top: 25px;
+      width: 26px;
+      height: 7px;
+      border-radius: 999px;
+      background: #8d4b2a;
+      transform-origin: right center;
+      animation: wag .5s ease-in-out infinite alternate;
+    }
+
+    .dog-leg {
+      position: absolute;
+      top: 49px;
+      width: 8px;
+      height: 18px;
+      border-radius: 999px;
+      background: #6f3b25;
+    }
+
+    .dog-leg.one { left: 35px; }
+    .dog-leg.two { left: 80px; }
+
+    @keyframes wag { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+    @keyframes dog-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    .mini-dog {
+      width: 62px;
+      height: 38px;
+      position: relative;
+      flex: 0 0 auto;
+      transform: translateY(5px);
+    }
+
+    .mini-dog span { position: absolute; display: block; }
+    .mini-dog .mini-body { left: 8px; top: 15px; width: 42px; height: 18px; border-radius: 999px; background: #a76235; }
+    .mini-dog .mini-head { right: 2px; top: 7px; width: 22px; height: 21px; border-radius: 11px; background: #b96f3d; }
+    .mini-dog .mini-ear { right: 18px; top: 9px; width: 11px; height: 20px; border-radius: 8px; background: #6f3b25; }
+    .mini-dog .mini-eye { right: 8px; top: 15px; width: 4px; height: 4px; border-radius: 50%; background: #17120f; }
+    .mini-dog .mini-tail { left: 0; top: 17px; width: 15px; height: 5px; border-radius: 999px; background: #8d4b2a; transform-origin: right center; animation: wag .65s ease-in-out infinite alternate; }
+
+    .peek-dog {
+      position: absolute;
+      right: 18px;
+      bottom: -4px;
+      opacity: .92;
+      pointer-events: none;
+    }
+
+    .speech {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 18px;
+      padding: 13px;
+    }
+
+    .progress-track {
+      height: 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      overflow: hidden;
+      margin-top: 13px;
+    }
+
+    .progress-track span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--sun), var(--leaf));
+      transition: width .22s ease;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat span { color: var(--muted); font-size: 13px; font-weight: 900; }
+    .stat strong { display: block; margin-top: 7px; font-size: 32px; }
+
+    .mode-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .mode-tabs button.active { background: var(--dark); color: white; border-color: var(--dark); }
+
+    .simple {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .path { display: grid; gap: 12px; }
+
+    .mission-card {
+      display: grid;
+      grid-template-columns: 70px minmax(0, 1fr) auto;
+      gap: 13px;
+      align-items: center;
+      border-width: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-card.current { border-color: var(--sun); }
+    .mission-card.done { border-color: var(--leaf); background: linear-gradient(90deg, var(--leaf-2), var(--panel)); }
+
+    .mission-icon {
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: var(--phase-bg);
+      color: var(--phase-ink);
+      font-size: 28px;
+      font-weight: 950;
+    }
+
+    .mission-actions {
+      display: grid;
+      gap: 8px;
+      min-width: 132px;
+    }
+
+    .mission-status {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 950;
+      text-align: center;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: var(--sky-2);
+      color: #184d7e;
+      font-size: 12px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .side { display: grid; gap: 16px; }
+
+    .lesson {
+      background: var(--dark);
+      color: white;
+    }
+
+    .lesson p { color: #d7e1da; }
+
+    .checklist { display: grid; gap: 9px; margin: 12px 0; }
+
+    .check-row {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 15px;
+      background: rgba(255,255,255,.06);
+      padding: 10px;
+      color: white;
+    }
+
+    .check-row input {
+      width: 24px;
+      min-height: 24px;
+      accent-color: var(--leaf);
+    }
+
+    .lesson-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .lesson-actions button { flex: 1 1 150px; }
+
+    .flow-panel {
+      margin: 0 0 16px;
+      padding: 16px;
+    }
+
+    .flow-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .flow-head h2 { margin: 0; }
+    .flow-head p { margin: 4px 0 0; }
+
+    .flow-strip {
+      overflow-x: auto;
+      padding: 4px 0 8px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+
+    .flow-map {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: max-content;
+      padding: 4px;
+    }
+
+    .flow-node {
+      min-width: 158px;
+      min-height: 72px;
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      padding: 10px;
+      text-align: left;
+      box-shadow: 0 8px 18px rgba(43, 35, 18, .08);
+      scroll-snap-align: start;
+    }
+
+    .flow-node.current {
+      border-color: var(--sun);
+      background: var(--sun-2);
+      box-shadow: 0 0 0 4px rgba(242, 170, 34, .18);
+    }
+
+    .flow-node.done {
+      border-color: var(--leaf);
+      background: var(--leaf-2);
+    }
+
+    .flow-node.lost {
+      border-color: var(--coral);
+      background: var(--coral-2);
+    }
+
+    .flow-node.branch {
+      border-style: dashed;
+    }
+
+    .flow-node small {
+      display: block;
+      color: var(--muted);
+      font-weight: 950;
+      margin-bottom: 4px;
+    }
+
+    .flow-node strong {
+      display: block;
+      line-height: 1.15;
+    }
+
+    .flow-arrow {
+      color: var(--muted);
+      font-size: 24px;
+      font-weight: 950;
+      flex: 0 0 auto;
+    }
+
+    .income-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .income-grid label {
+      display: grid;
+      gap: 5px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .advanced { display: none; }
+    .advanced.show { display: grid; gap: 16px; }
+
+    .machine-wrap { overflow-x: auto; padding: 8px 0 18px; }
+
+    .machine {
+      display: grid;
+      grid-template-columns: repeat(7, 152px);
+      gap: 18px;
+      min-width: 1160px;
+    }
+
+    .gear-node {
+      border: 0;
+      background: transparent;
+      text-align: center;
+      padding: 0;
+    }
+
+    .gear {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      border: 8px solid var(--gear);
+      background:
+        radial-gradient(circle at center, var(--panel) 0 29%, transparent 30%),
+        repeating-conic-gradient(var(--gear) 0deg 11deg, var(--gear-soft) 11deg 23deg);
+      box-shadow: 0 12px 22px rgba(30,30,20,.16);
+    }
+
+    .state-off { --gear: var(--coral); --gear-soft: var(--coral-2); }
+    .state-live { --gear: var(--sun); --gear-soft: var(--sun-2); }
+    .state-done { --gear: var(--leaf); --gear-soft: var(--leaf-2); }
+
+    .tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+
+    .tool {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff9ec;
+      padding: 12px;
+    }
+
+    .logo-row { display: flex; align-items: center; gap: 8px; margin-top: 7px; flex-wrap: wrap; }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      height: 34px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: white;
+      font-weight: 950;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 10;
+      padding: 12px 15px;
+      border-radius: 15px;
+      background: var(--dark);
+      color: white;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    @media (max-width: 1040px) {
+      .hero, .simple { grid-template-columns: 1fr; }
+      .stats, .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 690px) {
+      .app {
+        width: min(360px, calc(100vw - 20px));
+        padding: max(10px, env(safe-area-inset-top)) 0 calc(34px + env(safe-area-inset-bottom));
+      }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .hero, .stats, .mode-tabs, .simple, .path, .side, .advanced, .flow-panel {
+        width: 100%;
+        min-width: 0;
+      }
+      .panel, .stat, .mission-card, .coach-card {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        padding: 14px;
+        border-radius: 18px;
+        overflow-wrap: anywhere;
+      }
+      h1 { font-size: clamp(32px, 9vw, 38px); max-width: 100%; overflow-wrap: anywhere; }
+      .hero-copy, .panel p, .coach-card p { max-width: 100%; }
+      .mantra { width: 100%; border-radius: 18px; flex-wrap: wrap; line-height: 1.25; font-size: 15px; }
+      .coach-card { grid-template-columns: 1fr; }
+      .stats, .income-grid, .tools { grid-template-columns: 1fr; }
+      .mission-card { grid-template-columns: 58px minmax(0, 1fr); }
+      .mission-card > div { min-width: 0; }
+      .mission-actions { grid-column: 1 / -1; width: 100%; }
+      .mission-card button { width: 100%; }
+      .mission-icon { width: 54px; height: 54px; border-radius: 17px; }
+      .actions, .mode-tabs { display: grid; grid-template-columns: 1fr; }
+      .actions button, .mode-tabs button { width: 100%; }
+      .flow-head { align-items: flex-start; }
+      .flow-head .mini-dog { align-self: flex-end; margin-top: -14px; }
+      .machine { min-width: 1060px; grid-template-columns: repeat(7, 140px); }
+      .flow-panel { width: 100%; max-width: none; }
+      .flow-strip { width: 100%; }
+      .flow-node { min-width: 154px; }
+      .toast { left: 10px; right: 10px; bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="topbar">
+      <div class="brand"><div class="brand-mark">🔥</div><div>Funnel Quest</div></div>
+      <div class="save-chip" id="saveStatus">Autosave activo</div>
+    </div>
+
+    <section class="hero">
+      <div class="panel">
+        <div class="mantra">No persigas clientes: alimenta el sistema.</div>
+        <h1>Tu misión diaria del funnel</h1>
+        <p class="hero-copy">Revisa 7 fases, gana XP y sal con una acción concreta. Tu progreso se guarda automáticamente y puedes llevarte un backup cuando quieras.</p>
+        <div class="actions">
+          <button class="primary" id="startReview">Comenzar misión</button>
+          <button id="backupJson">Backup JSON</button>
+          <button id="exportCsv">CSV para Sheets</button>
+          <button id="importJson">Importar progreso</button>
+          <input type="file" id="importFile" accept="application/json" hidden />
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="dog-stage" aria-label="Perro salchicha coach animado">
+          <div class="dog">
+            <span class="dog-tail"></span><span class="dog-body"></span><span class="dog-head"></span><span class="dog-ear"></span><span class="dog-eye"></span><span class="dog-nose"></span><span class="dog-leg one"></span><span class="dog-leg two"></span>
+          </div>
+        </div>
+        <div class="speech">
+          <h2 id="coachTitle">Salchi Coach</h2>
+          <p id="coachLine">Hoy no necesitas hacerlo perfecto. Necesitas mover un engrane.</p>
+          <div class="progress-track"><span id="dailyBar"></span></div>
+          <p id="dailySummary" style="margin-top:10px;">0 de 7 fases completadas hoy.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat"><span>Racha</span><strong id="streak">0 días</strong></div>
+      <div class="stat"><span>XP del sistema</span><strong id="xp">0 XP</strong></div>
+      <div class="stat"><span>Ingreso brújula</span><strong id="income">$0</strong></div>
+      <div class="stat"><span>Siguiente fase</span><strong id="nextPhase">Atraer</strong></div>
+    </section>
+
+    <div class="mode-tabs">
+      <button class="active" id="simpleMode">Modo misión</button>
+      <button id="advancedMode">Modo avanzado</button>
+    </div>
+
+    <section class="panel flow-panel">
+      <div class="flow-head">
+        <div>
+          <h2>Mapa completo del sistema</h2>
+          <p>Desliza lateralmente para ubicar donde estas dentro del flujo real de captacion.</p>
+        </div>
+        <div class="mini-dog" aria-hidden="true"><span class="mini-tail"></span><span class="mini-body"></span><span class="mini-head"></span><span class="mini-ear"></span><span class="mini-eye"></span></div>
+      </div>
+      <div class="flow-strip" id="flowStrip">
+        <div class="flow-map" id="fullFlow"></div>
+      </div>
+    </section>
+
+    <section class="simple" id="simpleView">
+      <div class="path" id="phasePath"></div>
+      <aside class="side">
+        <div class="panel lesson" id="phaseLesson"></div>
+        <div class="panel">
+          <h2>Medidor rápido</h2>
+          <p>Si sube el esfuerzo y no sube el resultado, hay un engrane trabado.</p>
+          <div class="income-grid">
+            <label>Ticket promedio<input id="ticket" type="number" min="0" step="100" /></label>
+            <label>Leads semanales<input id="leads" type="number" min="0" step="1" /></label>
+            <label>Cierre %<input id="closeRate" type="number" min="0" max="100" step="1" /></label>
+            <label>Recurrencia %<input id="recurring" type="number" min="0" max="100" step="1" /></label>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="advanced" id="advancedView">
+      <div class="panel">
+        <h2>Mapa avanzado de engranes</h2>
+        <p>Mira la maquinaria completa cuando ya terminaste el repaso diario.</p>
+        <div class="machine-wrap"><div class="machine" id="machine"></div></div>
+      </div>
+      <div class="panel">
+        <h2>Upgrades por presupuesto</h2>
+        <div class="tools" id="tools"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Guardado</div>
+
+  <script>
+    const APP_VERSION = "4.0.0";
+    const STORE = "funnel-quest-v4";
+    const OLD_STORE = "funnel-quest-v3";
+    const today = () => new Date().toISOString().slice(0, 10);
+
+    const content = {
+      version: APP_VERSION,
+      phases: [
+        p("atraer", "Atraer", "🔥", "Haz que el prospecto correcto te descubra.", "Si nadie te descubre, no hay sistema.", ["Publica una pieza sobre el problema que más cuesta leads.", "Revisa si tu bio dice a quién ayudas y qué resultado prometes.", "Confirma que hay un CTA visible hacia conversación."], ["IG", "Canva", "OpenDesign"]),
+        p("educar", "Educar", "📚", "Da valor antes de pedir la venta.", "El valor va antes de la venta.", ["Convierte una duda real en carrusel.", "Muestra un antes/después de claridad o sistema.", "Explica por qué el cliente no necesita solo un logo."], ["Canva", "CapCut", "Codex"]),
+        p("conversar", "Conversar", "💬", "Convierte interés en diálogo útil.", "No sueltes precio en frío: abre diagnóstico.", ["Responde mensajes pendientes.", "Usa una pregunta de diagnóstico.", "Etiqueta de dónde vino el lead."], ["WA", "WhatsForm", "Gmail"]),
+        p("diagnosticar", "Diagnosticar", "🧭", "Detecta dolor, urgencia, presupuesto y encaje.", "Sin diagnóstico, tu propuesta es adivinanza.", ["Haz scoring de leads.", "Registra dolor y urgencia.", "Define si el lead está calificado."], ["Sheets", "WhatsForm", "CRM"]),
+        p("proponer", "Proponer", "🧾", "Convierte diagnóstico en solución comprable.", "La propuesta debe cerrar ruido, no abrirlo.", ["Envía una propuesta simple.", "Incluye alcance, precio y siguiente paso.", "Registra objeción principal."], ["Canva", "PDF", "Gmail"]),
+        p("entregar", "Entregar", "🛠️", "Haz que el cliente sienta orden después de pagar.", "La venta no termina: empieza la experiencia.", ["Ordena onboarding.", "Actualiza tablero de proyecto.", "Prepara checklist de entrega."], ["Trello", "Monday", "Sheets"]),
+        p("crecer", "Crecer", "🌱", "Convierte clientes en fans, recompra y referidos.", "Reactivar es más barato que volver a empezar.", ["Pide un testimonio específico.", "Propón la siguiente fase.", "Contacta un cliente dormido."], ["WA", "Canva", "Email"])
+      ],
+      tools: [
+        ["Carruseles", "OpenDesign + Canva", "Canva Pro + plantillas", "Claude Design / workflow pro", "Sube cuando publicar constante sea más lento que vender."],
+        ["Respuestas", "WhatsApp Business rápidas", "WhatsForm + respuestas guardadas", "Chatbot profesional", "Sube cuando pierdas leads por tardar en responder."],
+        ["CRM", "Google Sheets", "Trello/Monday simple", "CRM con scoring automático", "Sube cuando tengas más de 10 leads mensuales."],
+        ["Landing", "Hostinger simple", "Landing con tracking", "Funnel automatizado", "Sube cuando ya sepas qué CTA convierte."],
+        ["IA", "Codex + OpenRouter", "Agentes por tarea", "Sistema multiagente", "Sube cuando una tarea repetible ya produce dinero."]
+      ]
+    };
+
+    const funnelSteps = [
+      ["A", "Lead frio", "atraer"],
+      ["B", "Lead interesado", "atraer"],
+      ["C", "Lead educado", "educar"],
+      ["D", "Conversacion iniciada", "conversar"],
+      ["E", "Diagnostico", "diagnosticar"],
+      ["F", "Propuesta enviada", "proponer"],
+      ["G", "Seguimiento de propuesta", "proponer"],
+      ["H", "Cierre ganado", "entregar", "branch"],
+      ["I", "Cierre perdido / nutrir", "crecer", "lost"],
+      ["J", "Cliente activo", "entregar"],
+      ["K", "Entrega finalizada", "entregar"],
+      ["L", "Fan / testimonio", "crecer"],
+      ["M", "Recompra", "crecer", "branch"],
+      ["N", "Referido", "crecer", "branch"],
+      ["O", "Reactivacion", "crecer", "branch"]
+    ];
+
+    function p(id, title, icon, purpose, mantra, tasks, logos) { return { id, title, icon, purpose, mantra, tasks, logos }; }
+
+    function defaultState() {
+      const migrated = migrate();
+      return {
+        appVersion: APP_VERSION,
+        current: "atraer",
+        xp: migrated.xp || 0,
+        streak: migrated.streak || 0,
+        lastCompleteDate: "",
+        lastSaved: "",
+        review: migrated.review || {},
+        income: migrated.income || { ticket: 8500, leads: 8, closeRate: 20, recurring: 25 },
+        notes: migrated.notes || {},
+        advanced: false
+      };
+    }
+
+    function migrate() {
+      try { return JSON.parse(localStorage.getItem(OLD_STORE) || "{}"); } catch { return {}; }
+    }
+
+    let state = load();
+    function load() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORE) || "null");
+        return saved ? { ...defaultState(), ...saved } : defaultState();
+      } catch { return defaultState(); }
+    }
+
+    function save(show = true) {
+      state.lastSaved = new Date().toLocaleString("es-MX", { dateStyle: "short", timeStyle: "short" });
+      localStorage.setItem(STORE, JSON.stringify(state));
+      document.getElementById("saveStatus").textContent = "Autosave: " + state.lastSaved;
+      if (show) toast("Progreso guardado");
+    }
+
+    function toast(text) {
+      const el = document.getElementById("toast");
+      el.textContent = text;
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 1500);
+    }
+
+    function done(id) { return Boolean(state.review[today()]?.[id]); }
+    function doneCount() { return content.phases.filter(x => done(x.id)).length; }
+    function currentPhase() { return content.phases.find(x => x.id === state.current) || content.phases[0]; }
+
+    function selectPhase(id) {
+      state.current = id;
+      save(false);
+      render();
+      document.getElementById("phaseLesson").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function complete(id) {
+      state.review[today()] ||= {};
+      if (!state.review[today()][id]) { state.review[today()][id] = true; state.xp += 15; }
+      const next = content.phases.find(x => !state.review[today()][x.id]);
+      state.current = next?.id || id;
+      if (doneCount() === content.phases.length && state.lastCompleteDate !== today()) {
+        state.streak += 1;
+        state.lastCompleteDate = today();
+        state.xp += 40;
+        toast("Misión completa: +40 XP");
+      }
+      save(false);
+      render();
+    }
+
+    function undoComplete(id) {
+      state.review[today()] ||= {};
+      if (state.review[today()][id]) {
+        delete state.review[today()][id];
+        state.xp = Math.max(0, state.xp - 15);
+        state.current = id;
+        if (state.lastCompleteDate === today() && doneCount() < content.phases.length) state.lastCompleteDate = "";
+        toast("Fase reabierta");
+      } else {
+        state.current = id;
+      }
+      save(false);
+      render();
+    }
+
+    function render() {
+      renderStats();
+      renderFullFlow();
+      renderPath();
+      renderLesson();
+      renderAdvanced();
+      bindIncome();
+      document.getElementById("saveStatus").textContent = state.lastSaved ? "Autosave: " + state.lastSaved : "Autosave activo";
+      document.getElementById("simpleView").style.display = state.advanced ? "none" : "grid";
+      document.getElementById("advancedView").classList.toggle("show", state.advanced);
+      document.getElementById("simpleMode").classList.toggle("active", !state.advanced);
+      document.getElementById("advancedMode").classList.toggle("active", state.advanced);
+    }
+
+    function renderStats() {
+      const count = doneCount();
+      const percent = Math.round(count / content.phases.length * 100);
+      document.getElementById("dailyBar").style.width = percent + "%";
+      document.getElementById("dailySummary").textContent = `${count} de ${content.phases.length} fases completadas hoy.`;
+      document.getElementById("streak").textContent = `${state.streak} días`;
+      document.getElementById("xp").textContent = `${state.xp} XP`;
+      const base = state.income.ticket * state.income.leads * 4 * state.income.closeRate / 100;
+      document.getElementById("income").textContent = money(base + base * state.income.recurring / 100);
+      document.getElementById("nextPhase").textContent = content.phases.find(x => !done(x.id))?.title || "Completo";
+      const phase = currentPhase();
+      document.getElementById("coachTitle").textContent = "Salchi Coach";
+      document.getElementById("coachLine").textContent = doneCount() === content.phases.length ? "Misión completa. Ahora sí: mide, aprende y vuelve mañana." : phase.mantra;
+    }
+
+    function renderPath() {
+      document.getElementById("phasePath").innerHTML = content.phases.map((phase, index) => `
+        <article class="mission-card ${done(phase.id) ? "done" : ""} ${phase.id === state.current && !done(phase.id) ? "current" : ""}" style="--phase-bg:${bg(index)};--phase-ink:${ink(index)}">
+          <div class="mission-icon">${done(phase.id) ? "✓" : phase.icon}</div>
+          <div>
+            <h3>${phase.title}</h3>
+            <p>${phase.purpose}</p>
+            <div class="chips">${phase.logos.map(x => `<span class="chip">${x}</span>`).join("")}</div>
+          </div>
+          <div class="mission-actions">
+            <button class="primary" data-select="${phase.id}">Ver fase</button>
+            <span class="mission-status">${done(phase.id) ? "Completada hoy" : "Pendiente"}</span>
+          </div>
+          ${phase.id === state.current ? `<div class="peek-dog mini-dog" aria-hidden="true"><span class="mini-tail"></span><span class="mini-body"></span><span class="mini-head"></span><span class="mini-ear"></span><span class="mini-eye"></span></div>` : ""}
+        </article>
+      `).join("");
+    }
+
+    function renderLesson() {
+      const phase = currentPhase();
+      const isDone = done(phase.id);
+      document.getElementById("phaseLesson").innerHTML = `
+        <h2>${phase.icon} ${phase.title}</h2>
+        <p>${phase.mantra}</p>
+        <div class="checklist">${phase.tasks.map(task => `<label class="check-row"><input type="checkbox" ${isDone ? "checked" : ""} /><span>${task}</span></label>`).join("")}</div>
+        <div class="lesson-actions">
+          <button class="${isDone ? "dark" : "coral"}" ${isDone ? "disabled" : `data-complete="${phase.id}"`}>${isDone ? "Fase completada" : "Completar fase"}</button>
+          ${isDone ? `<button data-undo="${phase.id}">Deshacer completado</button>` : ""}
+        </div>
+        <label style="display:block;margin-top:12px;">Nota de hoy<textarea id="phaseNote">${state.notes[phase.id] || ""}</textarea></label>
+      `;
+    }
+
+    function renderFullFlow() {
+      document.getElementById("fullFlow").innerHTML = funnelSteps.map((step, index) => {
+        const [code, label, phaseId, kind] = step;
+        const phase = content.phases.find(x => x.id === phaseId);
+        const classes = ["flow-node", done(phaseId) ? "done" : "", phaseId === state.current ? "current" : "", kind === "lost" ? "lost" : "", kind === "branch" ? "branch" : ""].filter(Boolean).join(" ");
+        const arrow = index < funnelSteps.length - 1 ? `<span class="flow-arrow">&rarr;</span>` : "";
+        return `<button class="${classes}" data-select="${phaseId}"><small>${code} / ${phase?.title || ""}</small><strong>${label}</strong></button>${arrow}`;
+      }).join("");
+    }
+
+    function renderAdvanced() {
+      document.getElementById("machine").innerHTML = content.phases.map(phase => `
+        <button class="gear-node" data-select="${phase.id}">
+          <div class="gear state-${done(phase.id) ? "done" : phase.id === state.current ? "live" : "off"}"></div>
+          <strong>${phase.title}</strong>
+          <div class="chips" style="justify-content:center">${phase.logos.map(x => `<span class="chip">${x}</span>`).join("")}</div>
+        </button>
+      `).join("");
+      document.getElementById("tools").innerHTML = content.tools.map(tool => `
+        <div class="tool">
+          <h3>${tool[0]}</h3>
+          <div class="logo-row"><span class="logo">MVP</span><span>${tool[1]}</span></div>
+          <div class="logo-row"><span class="logo">PRO</span><span>${tool[2]}</span></div>
+          <div class="logo-row"><span class="logo">MAX</span><span>${tool[3]}</span></div>
+          <p>${tool[4]}</p>
+        </div>
+      `).join("");
+    }
+
+    function bindIncome() {
+      document.getElementById("ticket").value = state.income.ticket;
+      document.getElementById("leads").value = state.income.leads;
+      document.getElementById("closeRate").value = state.income.closeRate;
+      document.getElementById("recurring").value = state.income.recurring;
+    }
+
+    function bg(i) { return ["var(--coral-2)", "var(--sky-2)", "var(--leaf-2)", "var(--sun-2)", "var(--grape-2)", "var(--sky-2)", "var(--leaf-2)"][i]; }
+    function ink(i) { return ["#96391f", "#1d5589", "#176145", "#87560d", "#5f3d7d", "#1d5589", "#176145"][i]; }
+    function money(v) { return new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 }).format(v || 0); }
+    function download(blob, name) { const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = name; a.click(); URL.revokeObjectURL(url); }
+
+    document.addEventListener("click", event => {
+      const completeButton = event.target.closest("[data-complete]");
+      if (completeButton) complete(completeButton.dataset.complete);
+      const undoButton = event.target.closest("[data-undo]");
+      if (undoButton) undoComplete(undoButton.dataset.undo);
+      const selectButton = event.target.closest("[data-select]");
+      if (selectButton) selectPhase(selectButton.dataset.select);
+    });
+
+    document.addEventListener("input", event => {
+      if (["ticket", "leads", "closeRate", "recurring"].includes(event.target.id)) {
+        state.income = {
+          ticket: Number(document.getElementById("ticket").value),
+          leads: Number(document.getElementById("leads").value),
+          closeRate: Number(document.getElementById("closeRate").value),
+          recurring: Number(document.getElementById("recurring").value)
+        };
+        save(false);
+        renderStats();
+      }
+      if (event.target.id === "phaseNote") { state.notes[state.current] = event.target.value; save(false); }
+    });
+
+    document.getElementById("simpleMode").addEventListener("click", () => { state.advanced = false; save(false); render(); });
+    document.getElementById("advancedMode").addEventListener("click", () => { state.advanced = true; save(false); render(); });
+    document.getElementById("startReview").addEventListener("click", () => {
+      state.current = content.phases.find(x => !done(x.id))?.id || "atraer";
+      state.advanced = false;
+      save(false);
+      render();
+      document.getElementById("phaseLesson").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    document.getElementById("backupJson").addEventListener("click", () => download(new Blob([JSON.stringify({ state, contentVersion: APP_VERSION }, null, 2)], { type: "application/json" }), `funnel-quest-backup-${today()}.json`));
+    document.getElementById("exportCsv").addEventListener("click", () => {
+      const rows = [["fecha", "fase", "completado", "xp", "nota"], ...content.phases.map(x => [today(), x.title, done(x.id), state.xp, state.notes[x.id] || ""])];
+      const csv = rows.map(row => row.map(value => `"${String(value).replaceAll('"', '""')}"`).join(",")).join("\n");
+      download(new Blob([csv], { type: "text/csv;charset=utf-8" }), `funnel-quest-${today()}.csv`);
+    });
+    document.getElementById("importJson").addEventListener("click", () => document.getElementById("importFile").click());
+    document.getElementById("importFile").addEventListener("change", event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const imported = JSON.parse(reader.result);
+          state = { ...defaultState(), ...(imported.state || imported) };
+          save(false);
+          render();
+          toast("Backup importado");
+        } catch (error) {
+          alert("No pude importar ese backup: " + error.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    });
+
+    render();
+    save(false);
+
+    if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    }
+  </script>
+</body>
+</html>

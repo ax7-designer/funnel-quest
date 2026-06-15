@@ -1,0 +1,84 @@
+{
+  "version": "4.0.0",
+  "phases": [
+    {
+      "id": "atraer",
+      "title": "Atraer",
+      "icon": "fire",
+      "purpose": "Haz que el prospecto correcto te descubra.",
+      "mantra": "Si nadie te descubre, no hay sistema.",
+      "logos": ["IG", "Canva", "OpenDesign"]
+    },
+    {
+      "id": "educar",
+      "title": "Educar",
+      "icon": "book",
+      "purpose": "Da valor antes de pedir la venta.",
+      "mantra": "El valor va antes de la venta.",
+      "logos": ["Canva", "CapCut", "Codex"]
+    },
+    {
+      "id": "conversar",
+      "title": "Conversar",
+      "icon": "chat",
+      "purpose": "Convierte interes en dialogo util.",
+      "mantra": "No sueltes precio en frio: abre diagnostico.",
+      "logos": ["WA", "WhatsForm", "Gmail"]
+    },
+    {
+      "id": "diagnosticar",
+      "title": "Diagnosticar",
+      "icon": "compass",
+      "purpose": "Detecta dolor, urgencia, presupuesto y encaje.",
+      "mantra": "Sin diagnostico, tu propuesta es adivinanza.",
+      "logos": ["Sheets", "WhatsForm", "CRM"]
+    },
+    {
+      "id": "proponer",
+      "title": "Proponer",
+      "icon": "proposal",
+      "purpose": "Convierte diagnostico en solucion comprable.",
+      "mantra": "La propuesta debe cerrar ruido, no abrirlo.",
+      "logos": ["Canva", "PDF", "Gmail"]
+    },
+    {
+      "id": "entregar",
+      "title": "Entregar",
+      "icon": "tools",
+      "purpose": "Haz que el cliente sienta orden despues de pagar.",
+      "mantra": "La venta no termina: empieza la experiencia.",
+      "logos": ["Trello", "Monday", "Sheets"]
+    },
+    {
+      "id": "crecer",
+      "title": "Crecer",
+      "icon": "growth",
+      "purpose": "Convierte clientes en fans, recompra y referidos.",
+      "mantra": "Reactivar es mas barato que volver a empezar.",
+      "logos": ["WA", "Canva", "Email"]
+    }
+  ],
+  "upgradeTracks": [
+    {
+      "category": "Carruseles",
+      "mvp": "OpenDesign + Canva",
+      "pro": "Canva Pro + plantillas",
+      "max": "Claude Design / workflow pro",
+      "trigger": "Sube cuando publicar constante sea mas lento que vender."
+    },
+    {
+      "category": "Respuestas",
+      "mvp": "WhatsApp Business rapidas",
+      "pro": "WhatsForm + respuestas guardadas",
+      "max": "Chatbot profesional",
+      "trigger": "Sube cuando pierdas leads por tardar en responder."
+    },
+    {
+      "category": "CRM",
+      "mvp": "Google Sheets",
+      "pro": "Trello/Monday simple",
+      "max": "CRM con scoring automatico",
+      "trigger": "Sube cuando tengas mas de 10 leads mensuales."
+    }
+  ]
+}
