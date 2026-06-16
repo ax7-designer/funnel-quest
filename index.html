@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Funnel Quest: ritual diario para operar un sistema de captacion de leads creativo, visual y mobile-first." />
-  <meta name="theme-color" content="#2f9466" />
+  <meta name="theme-color" content="#10251f" />
   <link rel="manifest" href="./site.webmanifest" />
-  <title>Funnel Quest V4</title>
+  <title>Funnel Quest V5</title>
   <style>
     :root {
       --ink: #20231f;
       --muted: #677263;
-      --paper: #f8f4e8;
+      --paper: #eef7f1;
       --panel: #fffdf7;
       --line: #ded6c5;
       --leaf: #2f9466;
@@ -25,7 +25,10 @@
       --grape: #7654a1;
       --grape-2: #eee3f7;
       --dark: #15231c;
-      --shadow: 0 16px 36px rgba(43, 35, 18, .13);
+      --mint: #65f0a9;
+      --neon: #b7ff3c;
+      --night: #07150f;
+      --shadow: 0 18px 44px rgba(10, 24, 16, .18);
       --radius: 22px;
       color-scheme: light;
       font-family: "Aptos", "Segoe UI", "Trebuchet MS", sans-serif;
@@ -39,8 +42,10 @@
       margin: 0;
       min-height: 100%;
       background:
-        radial-gradient(circle at 10% 0%, rgba(242, 170, 34, .20), transparent 34rem),
-        radial-gradient(circle at 95% 10%, rgba(45, 119, 190, .13), transparent 28rem),
+        linear-gradient(135deg, rgba(183, 255, 60, .14), transparent 28%),
+        radial-gradient(circle at 10% 0%, rgba(242, 170, 34, .26), transparent 34rem),
+        radial-gradient(circle at 95% 10%, rgba(45, 119, 190, .20), transparent 28rem),
+        linear-gradient(180deg, #f8fff6 0%, #eef7f1 45%, #f7efe0 100%),
         var(--paper);
       color: var(--ink);
       font-size: 16px;
@@ -54,10 +59,12 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(32, 35, 31, .035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(32, 35, 31, .035) 1px, transparent 1px);
-      background-size: 36px 36px;
-      mask-image: linear-gradient(to bottom, #000, transparent 72%);
+        linear-gradient(rgba(32, 35, 31, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(32, 35, 31, .04) 1px, transparent 1px),
+        linear-gradient(115deg, transparent 0 45%, rgba(47, 148, 102, .07) 46% 48%, transparent 49% 100%);
+      background-size: 34px 34px, 34px 34px, 160px 160px;
+      mask-image: linear-gradient(to bottom, #000, transparent 78%);
+      animation: grid-drift 18s linear infinite;
     }
 
     button, input, textarea { font: inherit; }
@@ -71,14 +78,19 @@
       padding: 10px 15px;
       cursor: pointer;
       touch-action: manipulation;
-      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease;
     }
 
-    button:hover { transform: translateY(-1px); border-color: var(--leaf); }
+    button:hover { transform: translateY(-1px); border-color: var(--leaf); box-shadow: 0 12px 24px rgba(21,35,28,.12); }
     button:active { transform: translateY(1px) scale(.99); }
     button:disabled { cursor: default; opacity: .78; transform: none; }
     button:disabled:hover { transform: none; border-color: var(--dark); }
-    button.primary { color: white; background: var(--leaf); border-color: var(--leaf); box-shadow: 0 10px 18px rgba(47, 148, 102, .22); }
+    button.primary {
+      color: white;
+      background: linear-gradient(135deg, #1d8f62, #10251f);
+      border-color: #197952;
+      box-shadow: 0 12px 24px rgba(47, 148, 102, .28), inset 0 1px 0 rgba(255,255,255,.2);
+    }
     button.coral { color: white; background: var(--coral); border-color: var(--coral); }
     button.dark { color: white; background: var(--dark); border-color: var(--dark); }
 
@@ -106,6 +118,15 @@
       padding: 18px 0 40px;
     }
 
+    .app > * {
+      animation: rise-in .44s cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    .app > *:nth-child(2) { animation-delay: .04s; }
+    .app > *:nth-child(3) { animation-delay: .08s; }
+    .app > *:nth-child(4) { animation-delay: .12s; }
+    .app > *:nth-child(5) { animation-delay: .16s; }
+
     .topbar {
       display: flex;
       justify-content: space-between;
@@ -128,9 +149,10 @@
       display: grid;
       place-items: center;
       color: white;
-      background: var(--leaf);
-      box-shadow: 0 10px 18px rgba(47, 148, 102, .22);
+      background: linear-gradient(135deg, var(--coral), var(--leaf) 52%, var(--sky));
+      box-shadow: 0 14px 26px rgba(47, 148, 102, .28);
       font-size: 24px;
+      animation: pulse-mark 2.2s ease-in-out infinite;
     }
 
     .save-chip {
@@ -144,6 +166,7 @@
       color: var(--muted);
       font-size: 13px;
       font-weight: 900;
+      box-shadow: 0 8px 20px rgba(32,35,31,.08);
     }
 
     .hero {
@@ -161,6 +184,23 @@
       padding: 18px;
     }
 
+    .hero .panel {
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(21,35,28,.08);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.96), rgba(255,247,221,.94)),
+        var(--panel);
+    }
+
+    .hero .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 8px;
+      background: linear-gradient(90deg, var(--coral), var(--sun), var(--leaf), var(--sky), var(--grape));
+    }
+
     .mantra {
       display: inline-flex;
       align-items: center;
@@ -172,35 +212,53 @@
       color: #8b5208;
       font-weight: 950;
       margin-bottom: 14px;
+      box-shadow: 0 10px 20px rgba(242,170,34,.16);
     }
 
     .hero-copy { max-width: 760px; font-size: 18px; }
     .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 
     .coach-card {
-      background: var(--dark);
+      background:
+        linear-gradient(145deg, rgba(183,255,60,.14), transparent 36%),
+        linear-gradient(180deg, #10251f 0%, #07150f 100%);
       color: white;
       display: grid;
       grid-template-columns: 130px minmax(0, 1fr);
       gap: 14px;
       align-items: center;
       overflow: hidden;
+      border-color: rgba(183,255,60,.26);
+      box-shadow: 0 24px 48px rgba(7,21,15,.24);
     }
 
     .coach-card p { color: #d8e3db; margin-bottom: 0; }
 
     .dog-stage {
-      min-height: 128px;
+      min-height: 154px;
       display: grid;
       place-items: center;
       position: relative;
     }
 
+    .dog-stage::before {
+      content: "";
+      position: absolute;
+      width: 168px;
+      height: 46px;
+      border-radius: 999px;
+      bottom: 26px;
+      background: linear-gradient(90deg, rgba(101,240,169,.14), rgba(242,170,34,.18));
+      filter: blur(1px);
+      transform: skewX(-10deg);
+    }
+
     .dog {
-      width: 118px;
-      height: 66px;
+      width: 136px;
+      height: 78px;
       position: relative;
-      animation: dog-bob 1.7s ease-in-out infinite;
+      animation: dog-bob 1.45s ease-in-out infinite;
+      filter: drop-shadow(0 16px 18px rgba(0,0,0,.24));
     }
 
     .dog-body {
@@ -280,7 +338,11 @@
     .dog-leg.two { left: 80px; }
 
     @keyframes wag { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
-    @keyframes dog-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes dog-bob { 0%, 100% { transform: translateY(0) scale(1.12); } 50% { transform: translateY(-7px) scale(1.12); } }
+    @keyframes grid-drift { from { background-position: 0 0, 0 0, 0 0; } to { background-position: 34px 34px, 34px 34px, 160px 160px; } }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes pulse-mark { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-2px) rotate(-2deg); } }
+    @keyframes card-sheen { from { transform: translateX(-120%) skewX(-18deg); } to { transform: translateX(220%) skewX(-18deg); } }
 
     .mini-dog {
       width: 62px;
@@ -338,6 +400,12 @@
     .stat span { color: var(--muted); font-size: 13px; font-weight: 900; }
     .stat strong { display: block; margin-top: 7px; font-size: 32px; }
 
+    .stat {
+      position: relative;
+      overflow: hidden;
+      border-top: 4px solid rgba(47,148,102,.22);
+    }
+
     .mode-tabs {
       display: flex;
       gap: 8px;
@@ -364,9 +432,26 @@
       border-width: 2px;
       position: relative;
       overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
 
-    .mission-card.current { border-color: var(--sun); }
+    .mission-card::after {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 52px;
+      background: linear-gradient(90deg, rgba(255,255,255,.0), rgba(255,255,255,.36), rgba(255,255,255,0));
+      transform: translateX(-120%) skewX(-18deg);
+      pointer-events: none;
+    }
+
+    .mission-card.current {
+      border-color: var(--sun);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(242,170,34,.18);
+    }
+
+    .mission-card.current::after { animation: card-sheen 1.8s ease-in-out infinite; }
     .mission-card.done { border-color: var(--leaf); background: linear-gradient(90deg, var(--leaf-2), var(--panel)); }
 
     .mission-icon {
@@ -379,6 +464,7 @@
       color: var(--phase-ink);
       font-size: 28px;
       font-weight: 950;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 10px 18px rgba(32,35,31,.1);
     }
 
     .mission-actions {
@@ -488,7 +574,10 @@
       text-align: left;
       box-shadow: 0 8px 18px rgba(43, 35, 18, .08);
       scroll-snap-align: start;
+      transition: transform .18s ease, box-shadow .18s ease;
     }
+
+    .flow-node:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(43,35,18,.13); }
 
     .flow-node.current {
       border-color: var(--sun);
@@ -573,7 +662,11 @@
         radial-gradient(circle at center, var(--panel) 0 29%, transparent 30%),
         repeating-conic-gradient(var(--gear) 0deg 11deg, var(--gear-soft) 11deg 23deg);
       box-shadow: 0 12px 22px rgba(30,30,20,.16);
+      animation: gear-turn 6s linear infinite;
     }
+
+    .gear-node:nth-child(even) .gear { animation-direction: reverse; animation-duration: 7.5s; }
+    @keyframes gear-turn { to { transform: rotate(360deg); } }
 
     .state-off { --gear: var(--coral); --gear-soft: var(--coral-2); }
     .state-live { --gear: var(--sun); --gear-soft: var(--sun-2); }
@@ -631,7 +724,7 @@
 
     @media (max-width: 690px) {
       .app {
-        width: min(360px, calc(100vw - 20px));
+        width: min(320px, calc(100vw - 32px));
         padding: max(10px, env(safe-area-inset-top)) 0 calc(34px + env(safe-area-inset-bottom));
       }
       .topbar { flex-direction: column; align-items: flex-start; }
