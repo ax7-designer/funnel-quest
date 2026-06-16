@@ -2,7 +2,11 @@
 
 This folder contains only the public static files intended for Hostinger.
 
-Upload the contents of this folder to the domain or temporary subdomain public directory, usually `public_html/`.
+Upload the contents of this folder to a safe public subfolder, recommended:
+
+`public_html/funnel-quest/`
+
+Avoid uploading directly to `public_html/` if the domain already has an active website.
 
 Included:
 
@@ -18,7 +22,7 @@ Do not upload internal research folders, Instagram scripts, screenshots, backups
 
 After upload:
 
-1. Open the domain on mobile.
+1. Open `https://your-domain.com/funnel-quest/` on mobile.
 2. Confirm the dashboard loads.
 3. Test `Backup JSON`.
 4. Test `Importar progreso`.
