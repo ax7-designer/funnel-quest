@@ -2,6 +2,10 @@
 
 This folder contains only the public static files intended for Hostinger.
 
+GitHub repository:
+
+`https://github.com/ax7-designer/funnel-quest`
+
 Upload the contents of this folder to a safe public subfolder, recommended:
 
 `public_html/funnel-quest/`
@@ -27,3 +31,9 @@ After upload:
 3. Test `Backup JSON`.
 4. Test `Importar progreso`.
 5. If migrating from the local file version, import a previously exported backup JSON.
+
+Hostinger options:
+
+- hPanel Git deployment: Websites -> Dashboard -> Advanced -> Git, then connect GitHub and choose this repository.
+- hPanel File Manager: upload `hostinger_upload.zip` and extract it into `public_html/funnel-quest/`.
+- SFTP: upload these files into `/home/<user>/domains/<domain>/public_html/funnel-quest`.
