@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#10251f" />
   <link rel="manifest" href="./site.webmanifest" />
   <title>Funnel Quest V5</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --ink: #20231f;
@@ -168,6 +169,45 @@
       font-weight: 900;
       box-shadow: 0 8px 20px rgba(32,35,31,.08);
     }
+
+    .account-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 12px;
+      border: 1px solid rgba(47,148,102,.24);
+      border-radius: 18px;
+      background: rgba(255,253,247,.88);
+      box-shadow: 0 10px 24px rgba(32,35,31,.08);
+    }
+
+    .account-panel[hidden] { display: none; }
+
+    .account-copy {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .account-copy strong { line-height: 1.15; }
+    .account-copy span { color: var(--muted); font-size: 13px; font-weight: 800; }
+
+    .account-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .account-form input {
+      width: min(280px, 100%);
+      min-height: 44px;
+    }
+
+    .account-form button { min-height: 44px; }
 
     .hero {
       display: grid;
@@ -404,6 +444,209 @@
       position: relative;
       overflow: hidden;
       border-top: 4px solid rgba(47,148,102,.22);
+    }
+
+    .handoff-panel {
+      margin-bottom: 16px;
+      border-color: rgba(47,148,102,.28);
+    }
+
+    .handoff-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 10px;
+      align-items: stretch;
+      margin-top: 12px;
+    }
+
+    .handoff-step {
+      display: grid;
+      gap: 6px;
+      border: 1px solid rgba(47,148,102,.22);
+      border-radius: 18px;
+      background: rgba(255,255,255,.74);
+      padding: 12px;
+      min-height: 108px;
+    }
+
+    .handoff-step span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .handoff-step strong { font-size: 17px; }
+    .handoff-step p { margin: 0; }
+
+    .handoff-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--leaf);
+      font-size: 24px;
+      font-weight: 950;
+    }
+
+    .fuel-outputs {
+      margin-bottom: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .fuel-outputs[hidden] { display: none; }
+
+    .fuel-output-list { display: grid; gap: 9px; }
+
+    .fuel-output-card {
+      display: grid;
+      gap: 5px;
+      border: 1px solid rgba(47,148,102,.22);
+      border-radius: 15px;
+      background: rgba(255,255,255,.78);
+      padding: 11px;
+    }
+
+    .fuel-output-card code {
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .agc-lab {
+      margin-bottom: 16px;
+      border: 2px solid rgba(118,84,161,.18);
+      background:
+        linear-gradient(135deg, rgba(238,227,247,.92), rgba(255,253,247,.96) 45%),
+        var(--panel);
+      overflow: hidden;
+    }
+
+    .agc-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .agc-kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--grape-2);
+      color: #543175;
+      font-size: 12px;
+      font-weight: 950;
+      margin-bottom: 8px;
+    }
+
+    .agc-score {
+      min-width: 170px;
+      padding: 12px;
+      border-radius: 18px;
+      background: var(--dark);
+      color: white;
+      text-align: center;
+    }
+
+    .agc-score span {
+      display: block;
+      color: #d8e3db;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .agc-score strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1;
+      margin-top: 5px;
+    }
+
+    .agc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 10px 0 12px;
+    }
+
+    .agc-meta .chip { background: white; }
+
+    .agc-progress {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(21,35,28,.12);
+      overflow: hidden;
+      margin: 10px 0 14px;
+    }
+
+    .agc-progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--grape), var(--sun));
+      transition: width .2s ease;
+    }
+
+    .agc-quests {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .agc-card {
+      display: grid;
+      gap: 10px;
+      border: 1px solid rgba(118,84,161,.24);
+      border-radius: 18px;
+      background: rgba(255,255,255,.76);
+      padding: 12px;
+    }
+
+    .agc-card.done {
+      border-color: var(--leaf);
+      background: linear-gradient(135deg, var(--leaf-2), rgba(255,255,255,.82));
+    }
+
+    .agc-card h3 { margin: 0; }
+    .agc-card p { margin: 0; }
+
+    .agc-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .agc-link {
+      color: #543175;
+      font-weight: 950;
+      text-decoration: none;
+    }
+
+    .agc-link:hover { text-decoration: underline; }
+
+    .agc-task-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .agc-check {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      font-size: 14px;
+    }
+
+    .agc-check input {
+      width: 20px;
+      min-height: 20px;
+      accent-color: var(--grape);
+      margin-top: 1px;
     }
 
     .mode-tabs {
@@ -719,6 +962,8 @@
 
     @media (max-width: 1040px) {
       .hero, .simple { grid-template-columns: 1fr; }
+      .handoff-grid { grid-template-columns: 1fr; }
+      .handoff-arrow { min-height: 18px; transform: rotate(90deg); }
       .stats, .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
@@ -728,6 +973,11 @@
         padding: max(10px, env(safe-area-inset-top)) 0 calc(34px + env(safe-area-inset-bottom));
       }
       .topbar { flex-direction: column; align-items: flex-start; }
+      .account-panel { grid-template-columns: 1fr; }
+      .account-form { justify-content: stretch; }
+      .account-form input, .account-form button { width: 100%; }
+      .agc-head, .agc-quests { grid-template-columns: 1fr; }
+      .agc-score { width: 100%; }
       .hero, .stats, .mode-tabs, .simple, .path, .side, .advanced, .flow-panel {
         width: 100%;
         min-width: 0;
@@ -752,6 +1002,8 @@
       .mission-icon { width: 54px; height: 54px; border-radius: 17px; }
       .actions, .mode-tabs { display: grid; grid-template-columns: 1fr; }
       .actions button, .mode-tabs button { width: 100%; }
+      .handoff-panel .flow-head { display: grid; grid-template-columns: 1fr; gap: 10px; }
+      .handoff-panel .flow-head button { width: 100%; }
       .flow-head { align-items: flex-start; }
       .flow-head .mini-dog { align-self: flex-end; margin-top: -14px; }
       .machine { min-width: 1060px; grid-template-columns: repeat(7, 140px); }
@@ -769,15 +1021,29 @@
       <div class="save-chip" id="saveStatus">Autosave activo</div>
     </div>
 
+    <section class="account-panel" id="accountPanel" hidden>
+      <div class="account-copy">
+        <strong id="accountTitle">Cuenta y respaldo cloud</strong>
+        <span id="cloudStatus">Activa Supabase para guardar tu progreso por usuario.</span>
+      </div>
+      <div class="account-form">
+        <input id="accountEmail" type="email" inputmode="email" autocomplete="email" placeholder="tu@email.com" />
+        <button id="loginButton" class="primary">Entrar con link</button>
+        <button id="syncButton">Sincronizar</button>
+        <button id="logoutButton" class="dark" hidden>Salir</button>
+      </div>
+    </section>
+
     <section class="hero">
       <div class="panel">
         <div class="mantra">No persigas clientes: alimenta el sistema.</div>
         <h1>Tu misión diaria del funnel</h1>
-        <p class="hero-copy">Revisa 7 fases, gana XP y sal con una acción concreta. Tu progreso se guarda automáticamente y puedes llevarte un backup cuando quieras.</p>
+        <p class="hero-copy">Revisa 7 fases, gana XP y sal con una accion concreta para alimentar el sistema. Cuando una fase pide contenido, manda esa mision a AX7 para convertirla en carrusel.</p>
         <div class="actions">
           <button class="primary" id="startReview">Comenzar misión</button>
           <button id="backupJson">Backup JSON</button>
           <button id="exportCsv">CSV para Sheets</button>
+          <button id="exportOneMove">Descargar mision para AX7</button>
           <button id="importJson">Importar progreso</button>
           <input type="file" id="importFile" accept="application/json" hidden />
         </div>
@@ -802,6 +1068,62 @@
       <div class="stat"><span>XP del sistema</span><strong id="xp">0 XP</strong></div>
       <div class="stat"><span>Ingreso brújula</span><strong id="income">$0</strong></div>
       <div class="stat"><span>Siguiente fase</span><strong id="nextPhase">Atraer</strong></div>
+    </section>
+
+    <section class="panel handoff-panel" id="ax7BridgePanel">
+      <div class="flow-head">
+        <div>
+          <h2>De mision a carrusel</h2>
+          <p id="ax7BridgeMode">Modo web: descarga una mision segura para abrirla en AX7 Operator.</p>
+        </div>
+        <button id="exportOneMoveSecondary">Preparar carrusel</button>
+      </div>
+      <div class="handoff-grid">
+        <article class="handoff-step">
+          <span>Funnel Quest</span>
+          <strong id="bridgePhase">Atraer</strong>
+          <p id="bridgeMission">Elige el engrane que toca alimentar hoy.</p>
+        </article>
+        <div class="handoff-arrow" aria-hidden="true">&rarr;</div>
+        <article class="handoff-step">
+          <span>Mision segura</span>
+          <strong id="bridgeAction">Descarga JSON</strong>
+          <p id="bridgeOutcome">Solo incluye fase, objetivo, audiencia y nota de hoy.</p>
+        </article>
+        <div class="handoff-arrow" aria-hidden="true">&rarr;</div>
+        <article class="handoff-step">
+          <span>AX7 Operator</span>
+          <strong>7 slides 4:5</strong>
+          <p>Genera storyboard, assets sugeridos y checklist Canva.</p>
+        </article>
+      </div>
+    </section>
+    <section class="panel fuel-outputs" id="fuelOutputsPanel" hidden>
+      <div class="flow-head">
+        <div>
+          <h2>Carruseles generados</h2>
+          <p>Carruseles locales creados por AX7 Operator desde la mision de hoy.</p>
+        </div>
+        <button id="refreshFuelOutputs">Actualizar</button>
+      </div>
+      <div class="fuel-output-list" id="fuelOutputsList"></div>
+    </section>
+
+    <section class="panel agc-lab" id="agcLab" hidden>
+      <div class="agc-head">
+        <div>
+          <div class="agc-kicker">Subquest · Art Growth Club Lab</div>
+          <h2>Recolecta Sabiduría aplicando aprendizajes de Instagram</h2>
+          <p id="agcSummary">Cargando banco de quests generado por la tubería de investigación.</p>
+          <div class="agc-meta" id="agcMeta"></div>
+        </div>
+        <div class="agc-score">
+          <span>Sabiduría</span>
+          <strong id="wisdomScore">0</strong>
+        </div>
+      </div>
+      <div class="agc-progress"><span id="agcProgress"></span></div>
+      <div class="agc-quests" id="agcQuests"></div>
     </section>
 
     <div class="mode-tabs">
@@ -858,7 +1180,26 @@
     const APP_VERSION = "4.0.0";
     const STORE = "funnel-quest-v4";
     const OLD_STORE = "funnel-quest-v3";
+    const SUPABASE_URL = "https://eccemvedcdfilnjkmopg.supabase.co";
+    const SUPABASE_ANON_KEY = "";
+    const CLOUD_TABLE = "funnel_quest_user_progress";
+    const FUNNEL_QUEST_WORKSPACE = "D:\\OpenDesign";
+    const ENABLE_AGC_SUBQUEST = false;
     const today = () => new Date().toISOString().slice(0, 10);
+    let supabaseClient = null;
+    let cloudSession = null;
+    let cloudSaveTimer = null;
+    let desktopSaveTimer = null;
+    let desktopStateReady = false;
+    let suppressCloudSave = false;
+    let artGrowthClubQuestBank = {
+      generated_at: "",
+      source: "artgrowthclub",
+      source_profile: { followers: 572000, following: 51, status: "not_loaded" },
+      count: 0,
+      currency: "sabiduria",
+      quests: []
+    };
 
     const content = {
       version: APP_VERSION,
@@ -912,6 +1253,8 @@
         review: migrated.review || {},
         income: migrated.income || { ticket: 8500, leads: 8, closeRate: 20, recurring: 25 },
         notes: migrated.notes || {},
+        wisdom: migrated.wisdom || 0,
+        subquests: migrated.subquests || {},
         advanced: false
       };
     }
@@ -932,7 +1275,132 @@
       state.lastSaved = new Date().toLocaleString("es-MX", { dateStyle: "short", timeStyle: "short" });
       localStorage.setItem(STORE, JSON.stringify(state));
       document.getElementById("saveStatus").textContent = "Autosave: " + state.lastSaved;
+      if (!suppressCloudSave) queueCloudSave();
+      queueDesktopSave();
       if (show) toast("Progreso guardado");
+    }
+
+    function cloudEnabled() {
+      return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase);
+    }
+
+    function setCloudStatus(text) {
+      const el = document.getElementById("cloudStatus");
+      if (el) el.textContent = text;
+    }
+
+    function updateAccountUi() {
+      const panel = document.getElementById("accountPanel");
+      const email = document.getElementById("accountEmail");
+      const login = document.getElementById("loginButton");
+      const logout = document.getElementById("logoutButton");
+      const sync = document.getElementById("syncButton");
+      if (!panel) return;
+      if (!cloudEnabled()) {
+        panel.hidden = true;
+        return;
+      }
+      panel.hidden = false;
+      const signedIn = Boolean(cloudSession?.user);
+      email.hidden = signedIn;
+      login.hidden = signedIn;
+      logout.hidden = !signedIn;
+      sync.disabled = !signedIn;
+      document.getElementById("accountTitle").textContent = signedIn ? cloudSession.user.email : "Cuenta y respaldo cloud";
+      setCloudStatus(signedIn ? "Sesión activa. Tu progreso se sincroniza con Supabase." : "Entra con tu email para guardar progreso por usuario.");
+    }
+
+    async function initCloud() {
+      if (!cloudEnabled()) return;
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const { data } = await supabaseClient.auth.getSession();
+      cloudSession = data.session;
+      updateAccountUi();
+      if (cloudSession?.user) await loadCloudProgress();
+      supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+        cloudSession = session;
+        updateAccountUi();
+        if (session?.user) await loadCloudProgress();
+      });
+    }
+
+    async function loginWithEmail() {
+      if (!supabaseClient) return;
+      const email = document.getElementById("accountEmail").value.trim();
+      if (!email) {
+        toast("Escribe tu email");
+        return;
+      }
+      const { error } = await supabaseClient.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: location.href.split("#")[0] }
+      });
+      if (error) {
+        toast("No pude enviar el link");
+        setCloudStatus(error.message);
+        return;
+      }
+      setCloudStatus("Listo. Revisa tu correo y abre el link de acceso.");
+      toast("Link enviado");
+    }
+
+    async function logoutCloud() {
+      if (!supabaseClient) return;
+      await supabaseClient.auth.signOut();
+      cloudSession = null;
+      updateAccountUi();
+      toast("Sesión cerrada");
+    }
+
+    function queueCloudSave() {
+      if (!supabaseClient || !cloudSession?.user) return;
+      clearTimeout(cloudSaveTimer);
+      cloudSaveTimer = setTimeout(() => saveCloudProgress(false), 900);
+    }
+
+    async function saveCloudProgress(showToast = true) {
+      if (!supabaseClient || !cloudSession?.user) return;
+      const payload = { ...state, cloudSyncedAt: new Date().toISOString() };
+      const { error } = await supabaseClient
+        .from(CLOUD_TABLE)
+        .upsert({ user_id: cloudSession.user.id, state: payload }, { onConflict: "user_id" });
+      if (error) {
+        setCloudStatus("No se pudo sincronizar: " + error.message);
+        return;
+      }
+      setCloudStatus("Progreso sincronizado en Supabase.");
+      if (showToast) toast("Sync cloud listo");
+    }
+
+    async function loadCloudProgress() {
+      if (!supabaseClient || !cloudSession?.user) return;
+      const { data, error } = await supabaseClient
+        .from(CLOUD_TABLE)
+        .select("state, updated_at")
+        .eq("user_id", cloudSession.user.id)
+        .maybeSingle();
+      if (error) {
+        setCloudStatus("No pude cargar cloud: " + error.message);
+        return;
+      }
+      if (!data?.state) {
+        await saveCloudProgress(false);
+        return;
+      }
+      const localHasProgress = state.xp > 0 || state.streak > 0 || Object.keys(state.review || {}).length > 0 || Object.keys(state.notes || {}).length > 0;
+      const useCloud = !localHasProgress || confirm("Encontré progreso en Supabase. Aceptar = cargar cloud. Cancelar = subir este progreso local.");
+      if (useCloud) {
+        suppressCloudSave = true;
+        state = { ...defaultState(), ...data.state };
+        localStorage.setItem(STORE, JSON.stringify(state));
+        suppressCloudSave = false;
+        render();
+        setCloudStatus("Progreso cloud cargado.");
+        toast("Cloud cargado");
+      } else {
+        await saveCloudProgress(false);
+        setCloudStatus("Progreso local subido a Supabase.");
+      }
     }
 
     function toast(text) {
@@ -989,6 +1457,7 @@
       renderPath();
       renderLesson();
       renderAdvanced();
+      renderArtGrowthClubLab();
       bindIncome();
       document.getElementById("saveStatus").textContent = state.lastSaved ? "Autosave: " + state.lastSaved : "Autosave activo";
       document.getElementById("simpleView").style.display = state.advanced ? "none" : "grid";
@@ -1010,6 +1479,93 @@
       const phase = currentPhase();
       document.getElementById("coachTitle").textContent = "Salchi Coach";
       document.getElementById("coachLine").textContent = doneCount() === content.phases.length ? "Misión completa. Ahora sí: mide, aprende y vuelve mañana." : phase.mantra;
+    }
+
+    function renderAx7Bridge() {
+      const phase = currentPhase();
+      const native = Boolean(nativeInvoke());
+      document.getElementById("bridgePhase").textContent = phase.title;
+      document.getElementById("bridgeMission").textContent = phase.tasks?.[0] || phase.purpose;
+      document.getElementById("exportOneMove").textContent = native ? "Enviar mision a AX7" : "Descargar mision para AX7";
+      document.getElementById("bridgeAction").textContent = native ? "Guarda en D:\\OpenDesign" : "Descarga JSON";
+      document.getElementById("bridgeOutcome").textContent = native
+        ? "AX7 Operator puede cargar esta mision desde tu carpeta local."
+        : "Archivo seguro para importarlo en AX7 Operator sin exponer tu progreso completo.";
+      document.getElementById("ax7BridgeMode").textContent = native
+        ? "Modo desktop: Funnel Quest escribe la mision local para AX7 Operator."
+        : "Modo web: el navegador descarga la mision porque no puede escribir en D:\\OpenDesign.";
+    }
+    function agcStore() {
+      state.subquests ||= {};
+      state.subquests.artgrowthclub ||= { completed: {}, lastImportedAt: "", sourceProfile: {} };
+      state.subquests.artgrowthclub.completed ||= {};
+      return state.subquests.artgrowthclub;
+    }
+
+    function agcEntry(id) {
+      const store = agcStore();
+      store.completed[id] ||= { main: false, subtasks: [] };
+      return store.completed[id];
+    }
+
+    function agcCompletedCount() {
+      return artGrowthClubQuestBank.quests.filter(quest => agcEntry(quest.id).main).length;
+    }
+
+    function agcEarnedWisdom() {
+      return artGrowthClubQuestBank.quests.reduce((sum, quest) => sum + (agcEntry(quest.id).main ? Number(quest.wisdom_points || 0) : 0), 0);
+    }
+
+    function renderArtGrowthClubLab() {
+      if (!ENABLE_AGC_SUBQUEST) {
+        document.getElementById("agcLab").hidden = true;
+        return;
+      }
+      const quests = artGrowthClubQuestBank.quests || [];
+      const completed = agcCompletedCount();
+      const possibleWisdom = quests.reduce((sum, quest) => sum + Number(quest.wisdom_points || 0), 0);
+      const earnedWisdom = agcEarnedWisdom();
+      state.wisdom = earnedWisdom;
+      const profile = artGrowthClubQuestBank.source_profile || {};
+      document.getElementById("wisdomScore").textContent = earnedWisdom;
+      document.getElementById("agcProgress").style.width = quests.length ? `${Math.round(completed / quests.length * 100)}%` : "0%";
+      document.getElementById("agcSummary").textContent = quests.length
+        ? `${completed} de ${quests.length} quests completadas. Este paquete tiene confianza baja porque Instagram entregó metadata sin transcripción; úsalo como ritual de aplicación, no como cita textual.`
+        : "No hay quests cargadas todavía. Revisa que exista data/artgrowthclub_quest_bank.json.";
+      document.getElementById("agcMeta").innerHTML = [
+        `${formatCompact(profile.followers || 572000)} followers`,
+        `${profile.following || 51} following`,
+        `${quests.length} quests`,
+        `${possibleWisdom} sabiduría posible`,
+        `fuente: ${profile.source_method || "research_package"}`
+      ].map(item => `<span class="chip">${item}</span>`).join("");
+      document.getElementById("agcQuests").innerHTML = quests.map(quest => {
+        const entry = agcEntry(quest.id);
+        const mainChecked = entry.main ? "checked" : "";
+        const subtasks = (quest.subtasks || []).map((task, index) => `
+          <label class="agc-check">
+            <input type="checkbox" data-agc-sub="${quest.id}" data-agc-sub-index="${index}" ${entry.subtasks?.[index] ? "checked" : ""} />
+            <span>${task}</span>
+          </label>
+        `).join("");
+        return `
+          <article class="agc-card ${entry.main ? "done" : ""}">
+            <div class="agc-card-head">
+              <div>
+                <h3>${quest.title}</h3>
+                <p>${quest.category.replaceAll("_", " ")} · ${quest.funnel_phase} · confianza ${quest.confidence}</p>
+              </div>
+              <span class="chip">+${quest.wisdom_points}</span>
+            </div>
+            <label class="agc-check">
+              <input type="checkbox" data-agc-main="${quest.id}" ${mainChecked} />
+              <strong>${quest.main_task}</strong>
+            </label>
+            <div class="agc-task-list">${subtasks}</div>
+            <a class="agc-link" href="${quest.permalink}" target="_blank" rel="noopener">Abrir reel fuente</a>
+          </article>
+        `;
+      }).join("");
     }
 
     function renderPath() {
@@ -1084,7 +1640,110 @@
     function bg(i) { return ["var(--coral-2)", "var(--sky-2)", "var(--leaf-2)", "var(--sun-2)", "var(--grape-2)", "var(--sky-2)", "var(--leaf-2)"][i]; }
     function ink(i) { return ["#96391f", "#1d5589", "#176145", "#87560d", "#5f3d7d", "#1d5589", "#176145"][i]; }
     function money(v) { return new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 }).format(v || 0); }
+    function formatCompact(v) { return new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(v || 0); }
     function download(blob, name) { const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = name; a.click(); URL.revokeObjectURL(url); }
+    function nativeInvoke() { return window.__TAURI__?.core?.invoke || null; }
+    function queueDesktopSave() {
+      const invoke = nativeInvoke();
+      if (!invoke || !desktopStateReady) return;
+      clearTimeout(desktopSaveTimer);
+      desktopSaveTimer = setTimeout(() => invoke("save_state", { workspacePath: FUNNEL_QUEST_WORKSPACE, state }).catch(() => {}), 500);
+    }
+    async function initDesktopState() {
+      const invoke = nativeInvoke();
+      if (!invoke) return;
+      const savedState = await invoke("load_state", { workspacePath: FUNNEL_QUEST_WORKSPACE });
+      if (savedState && typeof savedState === "object") {
+        state = { ...defaultState(), ...savedState };
+        localStorage.setItem(STORE, JSON.stringify(state));
+        render();
+      }
+      desktopStateReady = true;
+      await invoke("save_state", { workspacePath: FUNNEL_QUEST_WORKSPACE, state });
+      await renderFuelOutputs();
+    }
+    function safeNumber(value) { return Number.isFinite(Number(value)) ? Number(value) : 0; }
+    function currentFunnelStep(phaseId) { return funnelSteps.find(step => step[2] === phaseId)?.[1] || currentPhase().title; }
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[char]));
+    }
+    function buildOneMove(source = nativeInvoke() ? "funnel-quest-desktop" : "funnel-quest-web") {
+      const phase = currentPhase();
+      return {
+        schemaVersion: "one-move/v1",
+        createdAt: new Date().toISOString(),
+        source,
+        phaseId: phase.id,
+        phaseTitle: phase.title,
+        funnelStep: currentFunnelStep(phase.id),
+        missionText: phase.tasks?.[0] || phase.mantra || phase.purpose,
+        contentGoal: phase.purpose,
+        audience: "Creativos independientes, psicologxs y terapeutas que quieren comunicar con estrategia visual",
+        notes: state.notes[phase.id] || "",
+        incomeSnapshot: {
+          ticket: safeNumber(state.income.ticket),
+          leads: safeNumber(state.income.leads),
+          closeRate: safeNumber(state.income.closeRate),
+          recurring: safeNumber(state.income.recurring)
+        },
+        constraints: [
+          "Solo carrusel 4:5 de 7 slides.",
+          "No incluir leads, conversaciones ni datos sensibles.",
+          "Canva es polish final, no motor principal."
+        ]
+      };
+    }
+    async function exportOneMove() {
+      const invoke = nativeInvoke();
+      const oneMove = buildOneMove(invoke ? "funnel-quest-desktop" : "funnel-quest-web");
+      if (invoke) {
+        try {
+          await invoke("write_one_move", { workspacePath: FUNNEL_QUEST_WORKSPACE, oneMove });
+          toast("Mision lista para AX7 en D:\\OpenDesign");
+          await renderFuelOutputs();
+          return;
+        } catch (error) {
+          toast("No pude guardar en D:, descargando JSON");
+        }
+      }
+      download(new Blob([JSON.stringify(oneMove, null, 2)], { type: "application/json" }), `mision-ax7-${today()}.json`);
+      toast("Mision descargada para AX7");
+    }
+    async function renderFuelOutputs() {
+      const panel = document.getElementById("fuelOutputsPanel");
+      const list = document.getElementById("fuelOutputsList");
+      const invoke = nativeInvoke();
+      if (!panel || !list) return;
+      if (!invoke) { panel.hidden = true; return; }
+      panel.hidden = false;
+      try {
+        const outputs = await invoke("list_fuel_outputs", { workspacePath: FUNNEL_QUEST_WORKSPACE });
+        list.innerHTML = outputs.length ? outputs.map(output => `
+          <article class="fuel-output-card">
+            <strong>${escapeHtml(output.phaseId || "fase")}: ${escapeHtml(output.status || "complete")}</strong>
+            <span>${escapeHtml(output.generatedAt || "")}</span>
+            <code>${escapeHtml(output.storyboardPath || "")}</code>
+          </article>
+        `).join("") : "<p>Todavia no hay carruseles generados desde AX7 Operator.</p>";
+      } catch (error) {
+        list.innerHTML = `<p>No pude leer outputs locales: ${escapeHtml(error.message || error)}</p>`;
+      }
+    }
+
+    async function loadArtGrowthClubQuestBank() {
+      if (!ENABLE_AGC_SUBQUEST) return;
+      try {
+        const response = await fetch("./data/artgrowthclub_quest_bank.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        artGrowthClubQuestBank = await response.json();
+        agcStore().lastImportedAt ||= artGrowthClubQuestBank.generated_at || new Date().toISOString();
+        agcStore().sourceProfile = artGrowthClubQuestBank.source_profile || {};
+        renderArtGrowthClubLab();
+        save(false);
+      } catch (error) {
+        document.getElementById("agcSummary").textContent = "No pude cargar data/artgrowthclub_quest_bank.json. Si abriste el HTML como archivo local, prueba con servidor local o Hostinger.";
+      }
+    }
 
     document.addEventListener("click", event => {
       const completeButton = event.target.closest("[data-complete]");
@@ -1093,6 +1752,12 @@
       if (undoButton) undoComplete(undoButton.dataset.undo);
       const selectButton = event.target.closest("[data-select]");
       if (selectButton) selectPhase(selectButton.dataset.select);
+      const agcMain = event.target.closest("[data-agc-main]");
+      if (agcMain) {
+        agcEntry(agcMain.dataset.agcMain).main = agcMain.checked;
+        save(false);
+        renderArtGrowthClubLab();
+      }
     });
 
     document.addEventListener("input", event => {
@@ -1107,10 +1772,24 @@
         renderStats();
       }
       if (event.target.id === "phaseNote") { state.notes[state.current] = event.target.value; save(false); }
+      if (event.target.matches("[data-agc-sub]")) {
+        const entry = agcEntry(event.target.dataset.agcSub);
+        const index = Number(event.target.dataset.agcSubIndex);
+        entry.subtasks ||= [];
+        entry.subtasks[index] = event.target.checked;
+        save(false);
+        renderArtGrowthClubLab();
+      }
     });
 
     document.getElementById("simpleMode").addEventListener("click", () => { state.advanced = false; save(false); render(); });
     document.getElementById("advancedMode").addEventListener("click", () => { state.advanced = true; save(false); render(); });
+    document.getElementById("loginButton").addEventListener("click", loginWithEmail);
+    document.getElementById("logoutButton").addEventListener("click", logoutCloud);
+    document.getElementById("syncButton").addEventListener("click", () => saveCloudProgress(true));
+    document.getElementById("accountEmail").addEventListener("keydown", event => {
+      if (event.key === "Enter") loginWithEmail();
+    });
     document.getElementById("startReview").addEventListener("click", () => {
       state.current = content.phases.find(x => !done(x.id))?.id || "atraer";
       state.advanced = false;
@@ -1119,6 +1798,9 @@
       document.getElementById("phaseLesson").scrollIntoView({ behavior: "smooth", block: "start" });
     });
     document.getElementById("backupJson").addEventListener("click", () => download(new Blob([JSON.stringify({ state, contentVersion: APP_VERSION }, null, 2)], { type: "application/json" }), `funnel-quest-backup-${today()}.json`));
+    document.getElementById("exportOneMove").addEventListener("click", exportOneMove);
+    document.getElementById("exportOneMoveSecondary").addEventListener("click", exportOneMove);
+    document.getElementById("refreshFuelOutputs").addEventListener("click", renderFuelOutputs);
     document.getElementById("exportCsv").addEventListener("click", () => {
       const rows = [["fecha", "fase", "completado", "xp", "nota"], ...content.phases.map(x => [today(), x.title, done(x.id), state.xp, state.notes[x.id] || ""])];
       const csv = rows.map(row => row.map(value => `"${String(value).replaceAll('"', '""')}"`).join(",")).join("\n");
@@ -1146,6 +1828,10 @@
 
     render();
     save(false);
+    renderFuelOutputs();
+    initDesktopState().catch(error => toast("Desktop local no disponible: " + (error.message || error)));
+    loadArtGrowthClubQuestBank();
+    initCloud().catch(error => setCloudStatus("Cloud no disponible: " + error.message));
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
       navigator.serviceWorker.register("./sw.js").catch(() => {});
